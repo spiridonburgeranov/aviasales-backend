@@ -1,0 +1,30 @@
+[project]
+name = "avia"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+authors = [{name = "spiridonburgeranov", email = "dead.yasu482@gmila.com"}]
+requires-python = ">=3.12,<4"
+
+dependencies = [
+    "pillow >=11.2.1,<12.0.0",
+    "psycopg2 >=2.9.10,<3.0.0",
+    "djangorestframework >=3.16.0,<4.0.0",
+    "djangorestframework-simplejwt >=5.5.0,<6.0.0",
+    "ruff >=0.11.8,<0.12.0",
+    "pytest >=8.3.5,<9.0.0",
+    "pytest-django >=4.11.1,<5.0.0",
+    "django >=5.2,<6.0",
+    "drf-spectacular >=0.28.0,<0.29.0",
+    "celery (>=5.5.3,<6.0.0)",
+    "redis (>=6.2.0,<7.0.0)",
+    "reportlab (>=4.4.1,<5.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+

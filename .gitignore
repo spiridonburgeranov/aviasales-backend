@@ -1,0 +1,35 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment variables file
+.env
+
+# Poetry virtual environment — не игнорируем, так как в отдельной папке
+
+# IDE settings (PyCharm)
+.idea/
+
+# Logs
+*.log
+
+# Static and media (пока нет, но можно добавить при необходимости)
+# staticfiles/
+# media/
+
+# Celery beat schedule file
+celerybeat-schedule
+
+# Redis dump (если используется локально)
+dump.rdb
+
+# Coverпшеage reports
+htmlcov/
+.coverage
+
+# pytest cache
+.pytest_cache/
+
+# mypy cache
+.mypy_cache/
