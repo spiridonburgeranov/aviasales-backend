@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from celery import shared_task
 from .services.pdf_gen import send_ticket_email
 from django.utils import timezone
@@ -18,3 +20,9 @@ def archive_flights():
     )
     flights_to_archive.update(is_archived=True)
 
+@shared_task
+def delete_expired_flights():
+    expired_date = timezone.now() - timedelta(days=30)
+    expired_flights = FlightModel.objects.filter(arrival__lt=expired_date)
+    count, _ = expired_flights.delete()
+    return f'{count} flights has been deleted'

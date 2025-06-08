@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'airlanse_book.apps.AirlanseBookConfig',
     'rest_framework',
     'drf_spectacular',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
