@@ -47,6 +47,11 @@ class UserViewSet(ModelViewSet):
     queryset = UserModel.objects.all()
     serializer_class = UserModelSerializer
 
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.is_active = False
+        instance.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 @extend_schema_view(
     list=extend_schema(summary='Список всех билетов'),
@@ -60,7 +65,7 @@ class TicketsViewSet(ModelViewSet):
     queryset = TicketsModel.objects.select_related('flight', 'owner')
     serializer_class = TicketsModelSerializer
     permission_classes = [OwnerOrReadOnly]
-
+    http_method_names = ['get', 'post', 'put', 'patch']
 
 @extend_schema_view(
     list=extend_schema(summary='Список всех рейсов'),
@@ -90,3 +95,9 @@ class FlightsViewSet(ModelViewSet):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return Response(TicketsModelSerializer(ticket).data, status=status.HTTP_201_CREATED)
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.is_archived = True
+        instance.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)

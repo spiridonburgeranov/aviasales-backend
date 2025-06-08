@@ -30,6 +30,7 @@ class FlightModel(models.Model):
     company = models.CharField(default=None, null=True, blank=True)
     is_archived = models.BooleanField(default=False)
 
+
     class Meta:
         db_table = 'flight_table'
 
@@ -70,7 +71,6 @@ class TicketsModel(models.Model):
     flight = models.ForeignKey(FlightModel, related_name='tickets', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2,validators=[MinValueValidator(0)])
     owner = models.ForeignKey(UserModel, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
-
 
     class Meta:
         db_table = 'tickets_table'
