@@ -1,10 +1,7 @@
-from django.http import JsonResponse
-from django.shortcuts import render
-from django.template.context_processors import request
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework import status
-from yaml import serialize
+from rest_framework.views import APIView
 from .services.buy_ticket import purchase_ticket
 from .serializers import TicketsModelSerializer,UserModelSerializer,FlightModelSerializer
 from .models import TicketsModel,FlightModel,UserModel
@@ -101,3 +98,31 @@ class FlightsViewSet(ModelViewSet):
         instance.is_archived = True
         instance.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@extend_schema(
+    summary='Самый дешевый билет',
+    parameters=[
+        OpenApiParameter(
+            name='city_from',
+            type=str,
+            description='Город отправления',
+            required=True
+        ),
+        OpenApiParameter(
+            name='city_to',
+            type=str,
+            description='Город прибытия',
+            required=True
+        ),
+    ],
+    responses=FlightModelSerializer,
+    description='Эндпоинт получения билетов по конкретным городам, по цене'
+)
+class LowestPriceFlightApiView(APIView):
+    def get(self, request):
+        city_from = request.query_params.get("city_from")
+        city_to = request.query_params.get("city_to")
+        flights = FlightModel.objects.filter(city_from=city_from,city_to=city_to).order_by("ticket_price")
+        serializer = FlightModelSerializer(flights, many=True)
+        return Response(serializer.data)
+
